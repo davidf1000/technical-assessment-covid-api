@@ -1,5 +1,5 @@
 from flask import Flask
-from api.constants.http_status_codes import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
+from api.constants.http_status_codes import HTTP_404_NOT_FOUND, HTTP_405_METHOD_NOT_ALLOWED, HTTP_500_INTERNAL_SERVER_ERROR
 # Import Resource Class
 from api.general.resource import general
 from api.yearly.resource import yearly
@@ -26,10 +26,17 @@ def handle_404(e):
 
 
 @app.errorhandler(HTTP_500_INTERNAL_SERVER_ERROR)
-def handle_404(e):
+def handle_500(e):
     return {
         "ok": False,
         "message": "Internal server problem"
+    }
+    
+@app.errorhandler(HTTP_405_METHOD_NOT_ALLOWED)
+def handle_405(e):
+    return {
+        "ok": False,
+        "message": "Method Not Allowed"
     }
 
 
