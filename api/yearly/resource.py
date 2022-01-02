@@ -2,7 +2,7 @@ from flask import Blueprint, request
 import requests
 from dateutil.parser import parse
 import datetime
-from api.checker.utils import check_param_date_range, check_string_year
+from api.checker.utils import check_param_date_range, check_param_year, check_string_year
 
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 
@@ -99,7 +99,6 @@ Description: Provide yearly data of total covid cases of the year provided in <y
 Response Body (JSON), example: /yearly/2020
 """
 
-
 @yearly.get('/<year>')
 def get_yearly_data_provided(year):
     # GET json data
@@ -108,13 +107,15 @@ def get_yearly_data_provided(year):
         res = requests.get(url, timeout=10)
     except:
         return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
-
+    # Check path param validity 
+    if not check_param_year(year):
+        return {"ok": False, "message": "Path parameter not valid"}, HTTP_400_BAD_REQUEST
     list_daily = res.json()['update']['harian']
     # Filter daily data that fits inside year range
     list_daily = [x for x in list_daily if parse(
         x['key_as_string']).year == int(year)]
     # if not a single record found, handle error
-    if (len(list_daily==0)):
+    if (len(list_daily)==0):
         return {"ok": False, "message": "Data not found"}, HTTP_404_NOT_FOUND
     # Calculate positive, recovered, and deaths in that year, active = positive - recovered - deaths
     # Error handling for dict struct validity 
