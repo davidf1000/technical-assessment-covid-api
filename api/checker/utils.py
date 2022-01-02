@@ -1,5 +1,4 @@
 from dateutil.parser import parse
-import requests
 import datetime
 import calendar
 
@@ -7,11 +6,7 @@ def check_string_year(item):
     year = item
     if(not year):
         return True
-    if(len(year)!=4):
-        return False
-    if(not str(year).isnumeric()):
-        return False
-    if(int(year) > datetime.datetime.now().year):
+    if not check_param_year(year):
         return False
     return True
 
@@ -22,7 +17,7 @@ def check_string_year_month(item):
     if(not year or not month):
         return True
     # Check year validity first
-    if( not check_string_year(year)):
+    if( not check_param_year(year)):
         return False
     # Check Month 
     if not check_param_month(month):
@@ -36,10 +31,10 @@ def check_string_year_month_day(item):
     if(not year or not month or not day):
         return True
     # Check Year
-    if(not check_string_year(year)):
+    if(not check_param_year(year)):
         return False
-    # Check Year and Month
-    if(not check_string_year_month(year,month)):
+    # Check Month
+    if(not check_param_month(month)):
         return False
     # Check day 
     if not check_param_day(year,month,day):
@@ -47,7 +42,13 @@ def check_string_year_month_day(item):
     return True
 
 def check_param_year(year):
-    return check_string_year(year)
+    if(len(year)!=4):
+        return False
+    if(not str(year).isnumeric()):
+        return False
+    if(int(year) > datetime.datetime.now().year):
+        return False
+    return True    
 
 def check_param_month(month):
     if(len(month)!=2):
@@ -63,7 +64,7 @@ def check_param_day(year,month,day):
         return False
     if(not str(day).isnumeric()):
         return False
-    if(int(day) < 1 or int(day) > calendar.monthrange(year,month)[1]):
+    if(int(day) < 1 or int(day) > calendar.monthrange(int(year),int(month))[1]):
         return False
     return True    
         
