@@ -198,12 +198,32 @@ Response Body (JSON), example: /daily/2020/05/01
 """
 
 
-@daily.get('/<year>/<month>/<date>')
-def get_daily_data_of_provided_year_month_date(year, month, date):
+@daily.get('/<year>/<month>/<day>')
+def get_daily_data_of_provided_year_month_date(year, month, day):
+    # GET json data
+    url = "https://data.covid19.go.id/public/api/update.json"
+    res = requests.get(url)
+    list_daily = res.json()['update']['harian']
+    # Filter by year, month, and date first before further processing
+    list_daily = [x for x in list_daily if f"{parse(x['key_as_string']).year}-{parse(x['key_as_string']).month}-{parse(x['key_as_string']).day}" == f"{year}-{int(month)}-{int(day)}"]
+    print("list daily: ",list_daily)
+    item = list_daily[0] 
+    # Create empty list
+    date = parse(item["key_as_string"])
+    positive = item["jumlah_positif"]['value']
+    recovered = item["jumlah_sembuh"]['value']
+    deaths = item["jumlah_meninggal"]['value']
+    active = positive - recovered - deaths
+    data = {
+        "date": f'{date.year}-{str(date.month).zfill(2)}-{str(date.day).zfill(2)}',
+        "positive": positive,
+        "recovered": recovered,
+        "deaths": deaths,
+        "active": active
+    }
     response = {
-        "message": "daily covid cases information in the provided year, month, and date",
-        "year": year,
-        "month": month,
-        "date": date
+        "ok": True,
+        "data": data,
+        "message": "Request Successfull"
     }
     return response, 200
