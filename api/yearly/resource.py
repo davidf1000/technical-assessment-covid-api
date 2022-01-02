@@ -113,18 +113,25 @@ def get_yearly_data_provided(year):
     # Filter daily data that fits inside year range
     list_daily = [x for x in list_daily if parse(
         x['key_as_string']).year == int(year)]
+    # if not a single record found, handle error
+    if (len(list_daily==0)):
+        return {"ok": False, "message": "Data not found"}, HTTP_404_NOT_FOUND
     # Calculate positive, recovered, and deaths in that year, active = positive - recovered - deaths
-    positive = sum([x["jumlah_positif"]['value'] for x in list_daily])
-    recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily])
-    deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily])
-    active = positive - recovered - deaths
-    data = {
-        "year": year,
-        "positive": positive,
-        "recovered": recovered,
-        "deaths": deaths,
-        "active": active
-    }
+    # Error handling for dict struct validity 
+    try:
+        positive = sum([x["jumlah_positif"]['value'] for x in list_daily])
+        recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily])
+        deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily])
+        active = positive - recovered - deaths
+        data = {
+            "year": year,
+            "positive": positive,
+            "recovered": recovered,
+            "deaths": deaths,
+            "active": active
+        }
+    except Exception as e:
+        return {"ok": False, "message": "System internal problem"}, HTTP_500_INTERNAL_SERVER_ERROR
     response = {
         "ok": True,
         "data": data,
