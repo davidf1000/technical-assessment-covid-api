@@ -144,7 +144,7 @@ Response Body (JSON), example: /daily/2020/05
 
 
 @daily.get('/<year>/<month>')
-def get_daily_data_of_provided_year_month(year):
+def get_daily_data_of_provided_year_month(year,month):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
     res = requests.get(url)
