@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 import requests
 
-from api.constants.http_status_codes import HTTP_200_OK
+from api.constants.http_status_codes import HTTP_200_OK, HTTP_500_INTERNAL_SERVER_ERROR
 general = Blueprint("general", __name__, url_prefix="/")
 
 """
@@ -15,9 +15,17 @@ Response Body (JSON)
 @general.get('')
 def get_general_info():
     url = "https://data.covid19.go.id/public/api/update.json"
-    res = requests.get(url)
+    try:
+        res = requests.get(url,timeout=10)
+    except:
+        response = {
+            "ok" : False,
+            "message" : "Error Fetching API from Goverment API"
+        }
+        return response,HTTP_500_INTERNAL_SERVER_ERROR
     data = res.json()
     
+    # Check if exists 
     total_positive = data['update']['total']['jumlah_positif']
     total_recovered = data['update']['total']['jumlah_sembuh']
     total_deaths = data['update']['total']['jumlah_meninggal']
