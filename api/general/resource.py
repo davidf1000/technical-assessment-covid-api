@@ -38,6 +38,6 @@ def get_general_info():
             "new_deaths": new_deaths,
             "new_active": new_active
             },
-        "message": "Get covid cases general information success"
+        "message": "Request Successfull"     
     }
     return response, 200

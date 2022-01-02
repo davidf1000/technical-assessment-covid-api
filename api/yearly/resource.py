@@ -56,7 +56,7 @@ def get_yearly_data():
     response = {
         "ok" : True,
         "data" : data,
-        "message":"covid cases yearly information"     
+        "message": "Request Successfull"     
         }
     return response,200
 """
@@ -66,8 +66,27 @@ Response Body (JSON), example: /yearly/2020
 """
 @yearly.get('/<year>')
 def get_yearly_data_provided(year):
+    # GET json data
+    url = "https://data.covid19.go.id/public/api/update.json"
+    res = requests.get(url)
+    list_daily = res.json()['update']['harian']
+    # Filter daily data that fits inside year range
+    list_daily = [x for x in list_daily if parse(x['key_as_string']).year == int(year)]
+    # Calculate positive, recovered, and deaths in that year, active = positive - recovered - deaths
+    positive = sum([x["jumlah_positif"]['value'] for x in list_daily])
+    recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily])
+    deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily])
+    active = positive - recovered - deaths
+    data = {
+        "year":year,
+        "positive": positive ,
+        "recovered": recovered,
+        "deaths":deaths,
+        "active":active
+    }
     response = {
-        "message":"covid cases information of provided year",
-        "year":year
+        "ok" : True,
+        "data" : data,
+        "message": "Request Successfull"       
         }
     return response,200
