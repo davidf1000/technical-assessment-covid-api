@@ -15,7 +15,7 @@ current month. example: ?upto=2022.01
 Description: Provide monthly data of total covid cases.
 Response Body (JSON)
 """
-@monthly.get('/')
+@monthly.get('')
 def get_monthly_data():
     since = request.args.get('since')
     upto = request.args.get('upto')

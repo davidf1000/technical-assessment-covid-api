@@ -15,7 +15,7 @@ today. example: ?upto=2022.01.01
 Description: Provide daily data of covid cases.
 Response Body (JSON)
 """
-@daily.get('/')
+@daily.get('')
 def get_daily_data():
     since = request.args.get('since')
     upto = request.args.get('upto')

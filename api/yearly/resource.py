@@ -15,7 +15,7 @@ example: ?upto=2022
 Description: Provide yearly data of total covid cases.
 Response Body (JSON)
 """
-@yearly.get('/')
+@yearly.get('')
 def get_yearly_data():
     since = request.args.get('since')
     upto = request.args.get('upto')
