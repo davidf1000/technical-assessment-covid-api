@@ -17,6 +17,12 @@ class DailyTest(unittest.TestCase):
         response = tester.get("/daily?since=2021.01.01&upto=2021.04.20")
         status_code = response.status_code
         self.assertEqual(status_code,200)
+    # Check method not allowed
+    # Check Query String since
+    # Check Query String upto
+    # Check Query String since and upto  
+    # Check response JSON OK
+    # Check response 404             
         
 """
 URL: http://<host>:<port>/daily/<year>
@@ -30,6 +36,13 @@ class DailyProvidedYearTest(unittest.TestCase):
         response = tester.get("/daily/2021?since=2021.01.01&upto=2021.04.20")
         status_code = response.status_code
         self.assertEqual(status_code,200)
+    # Check method not allowed
+    # Check Query String since
+    # Check Query String upto
+    # Check Query String since and upto  
+    # Check path parameter   
+    # Check response JSON OK
+    # Check response 404             
         
 """
 URL: http://<host>:<port>/daily/<year>/<month>
@@ -44,6 +57,13 @@ class DailyProvidedYearMonthTest(unittest.TestCase):
         response = tester.get("/daily/2021/03?since=2021.03.01&upto=2021.03.25")
         status_code = response.status_code
         self.assertEqual(status_code,200)
+    # Check method not allowed
+    # Check Query String since
+    # Check Query String upto
+    # Check Query String since and upto  
+    # Check path parameter   
+    # Check response JSON OK
+    # Check response 404             
         
 """
 URL: http://<host>:<port>/daily/<year>/<month>/<date>
@@ -58,6 +78,10 @@ class DailyProvidedYearMonthDateTest(unittest.TestCase):
         response = tester.get("/daily/2021/03/02")
         status_code = response.status_code
         self.assertEqual(status_code,200)
+    # Check method not allowed
+    # Check path parameter   
+    # Check response JSON OK
+    # Check response 404             
         
 if __name__ == "__main__":
     unittest.main(argv=[''],verbosity=2, exit=False)

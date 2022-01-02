@@ -17,6 +17,12 @@ class MonthlyTest(unittest.TestCase):
         response = tester.get("/yearly?since=2021.01&upto=2021.04")
         status_code = response.status_code
         self.assertEqual(status_code,200)
+    # Check method not allowed
+    # Check Query String since
+    # Check Query String upto
+    # Check Query String since and upto     
+    # Check response JSON OK
+    # Check response 404         
         
 """
 URL: http://<host>:<port>/monthly/<year>
@@ -30,6 +36,13 @@ class MonthlyProvidedYearTest(unittest.TestCase):
         response = tester.get("/monthly/2021?since=2021.01&upto=2021.04")
         status_code = response.status_code
         self.assertEqual(status_code,200)
+    # Check method not allowed
+    # Check Query String since
+    # Check Query String upto
+    # Check Query String since and upto  
+    # Check path parameter   
+    # Check response JSON OK
+    # Check response 404                
         
 """
 URL: http://<host>:<port>/monthly/<year>/<month>
@@ -44,6 +57,10 @@ class MonthlyProvidedYearMonthTest(unittest.TestCase):
         response = tester.get("/monthly/2021/03")
         status_code = response.status_code
         self.assertEqual(status_code,200)
+    # Check method not allowed
+    # Check path parameter   
+    # Check response JSON OK
+    # Check response 404            
         
 if __name__ == "__main__":
     unittest.main(argv=[''],verbosity=2, exit=False)

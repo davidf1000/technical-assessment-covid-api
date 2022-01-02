@@ -16,7 +16,10 @@ class GeneralTest(unittest.TestCase):
         response = tester.get("/")
         status_code = response.status_code
         self.assertEqual(status_code,200)
-        
+    # Check method not allowed
+    
+    # Check response JSON
+    
 
 if __name__ == "__main__":
     unittest.main(argv=[''],verbosity=2, exit=False)
