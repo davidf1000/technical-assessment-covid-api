@@ -2,7 +2,6 @@ from flask import Blueprint,request
 import requests
 from dateutil.parser import parse
 import datetime
-import pytz
 
 yearly = Blueprint("yearly", __name__, url_prefix="/yearly")
 

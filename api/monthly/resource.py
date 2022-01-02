@@ -36,7 +36,7 @@ def get_monthly_data():
     else:
         since = earliest
     if request.args.get('upto') is not None : 
-        upto = parse(request.args.get('upto'))
+        upto = parse(request.args.get('upto').replace('.','-'))
         # replace hari dengan hari terakhir dari bulan tersebut
         upto.replace(day=calendar.monthrange(since.year,since.month)[1])
     else:
