@@ -4,7 +4,7 @@ import requests
 import datetime
 import calendar
 
-from api.constants.http_status_codes import HTTP_200_OK
+from api.constants.http_status_codes import HTTP_200_OK,HTTP_500_INTERNAL_SERVER_ERROR
 
 monthly = Blueprint("monthly", __name__, url_prefix="/monthly")
 
@@ -25,7 +25,14 @@ Response Body (JSON)
 def get_monthly_data():
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
-    res = requests.get(url)
+    try:
+        res = requests.get(url,timeout=10)
+    except:
+        response = {
+            "ok" : False,
+            "message" : "Error Fetching API from Goverment API"
+        }
+        return response,HTTP_500_INTERNAL_SERVER_ERROR
     list_daily = res.json()['update']['harian']
     # Find earliest daily data and current date 
     earliest = parse(min(list_daily,key=lambda x:parse(x['key_as_string']))['key_as_string'])
@@ -91,7 +98,14 @@ Response Body (JSON), example: /monthly/2020
 def get_monthly_data_of_provided_year(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
-    res = requests.get(url)
+    try:
+        res = requests.get(url,timeout=10)
+    except:
+        response = {
+            "ok" : False,
+            "message" : "Error Fetching API from Goverment API"
+        }
+        return response,HTTP_500_INTERNAL_SERVER_ERROR
     list_daily = res.json()['update']['harian']
     # Filter by year first before further processing
     list_daily = [x for x in list_daily if parse(x['key_as_string']).year == int(year)]
@@ -152,7 +166,14 @@ Response Body (JSON), example: /monthly/2020/03
 def get_monthly_data_of_provided_month_year(year,month):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
-    res = requests.get(url)
+    try:
+        res = requests.get(url,timeout=10)
+    except:
+        response = {
+            "ok" : False,
+            "message" : "Error Fetching API from Goverment API"
+        }
+        return response,HTTP_500_INTERNAL_SERVER_ERROR
     list_daily = res.json()['update']['harian']
     # Filter by year and month first before further processing
     list_daily = [x for x in list_daily if f"{parse(x['key_as_string']).year}-{parse(x['key_as_string']).month}" == f"{year}-{int(month)}"]
