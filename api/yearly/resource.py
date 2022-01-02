@@ -3,6 +3,8 @@ import requests
 from dateutil.parser import parse
 import datetime
 
+from api.constants.http_status_codes import HTTP_200_OK
+
 yearly = Blueprint("yearly", __name__, url_prefix="/yearly")
 
 """
@@ -57,7 +59,7 @@ def get_yearly_data():
         "data" : data,
         "message": "Request Successfull"     
         }
-    return response,200
+    return response,HTTP_200_OK
 """
 Method: GET
 Description: Provide yearly data of total covid cases of the year provided in <year>.
@@ -88,4 +90,4 @@ def get_yearly_data_provided(year):
         "data" : data,
         "message": "Request Successfull"       
         }
-    return response,200
+    return response,HTTP_200_OK

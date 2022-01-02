@@ -4,6 +4,8 @@ import requests
 import datetime
 import calendar
 
+from api.constants.http_status_codes import HTTP_200_OK
+
 daily = Blueprint("daily", __name__, url_prefix="/daily")
 
 """
@@ -64,7 +66,7 @@ def get_daily_data():
         "data": data,
         "message": "Request Successfull"
     }
-    return response, 200
+    return response, HTTP_200_OK
 
 
 """
@@ -125,7 +127,7 @@ def get_daily_data_of_provided_year(year):
         "data": data,
         "message": "Request Successfull"
     }
-    return response, 200
+    return response, HTTP_200_OK
 
 
 """
@@ -187,7 +189,7 @@ def get_daily_data_of_provided_year_month(year,month):
         "data": data,
         "message": "Request Successfull"
     }
-    return response, 200
+    return response, HTTP_200_OK
 
 
 """
@@ -226,4 +228,4 @@ def get_daily_data_of_provided_year_month_date(year, month, day):
         "data": data,
         "message": "Request Successfull"
     }
-    return response, 200
+    return response, HTTP_200_OK

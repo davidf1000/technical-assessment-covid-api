@@ -4,6 +4,8 @@ import requests
 import datetime
 import calendar
 
+from api.constants.http_status_codes import HTTP_200_OK
+
 monthly = Blueprint("monthly", __name__, url_prefix="/monthly")
 
 """
@@ -69,7 +71,7 @@ def get_monthly_data():
         "data" : data,
         "message": "Request Successfull"     
         }
-    return response,200
+    return response,HTTP_200_OK
 
 
 """
@@ -137,7 +139,7 @@ def get_monthly_data_of_provided_year(year):
         "data" : data,
         "message": "Request Successfull"     
         }
-    return response,200
+    return response,HTTP_200_OK
 
 """
 URL: http://<host>:<port>/monthly/<year>/<month>
@@ -171,4 +173,4 @@ def get_monthly_data_of_provided_month_year(year,month):
         "data" : data,
         "message": "Request Successfull"     
         }
-    return response,200
+    return response,HTTP_200_OK

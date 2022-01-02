@@ -1,5 +1,7 @@
 from flask import Blueprint, request
 import requests
+
+from api.constants.http_status_codes import HTTP_200_OK
 general = Blueprint("general", __name__, url_prefix="/")
 
 """
@@ -40,4 +42,4 @@ def get_general_info():
             },
         "message": "Request Successfull"     
     }
-    return response, 200
+    return response, HTTP_200_OK
