@@ -1,15 +1,17 @@
 from flask import Flask
-from flask_restful import Api,Resource, abort,reqparse
+# Import Resource Class
+from api.general.resource import general
+from api.yearly.resource import yearly
+from api.monthly.resource import monthly
+from api.daily.resource import daily
 
 app = Flask(__name__)
-api = Api(app)
+# api = Api(app)
 
-class GeneralInformation(Resource):
-    def get(self):
-        result = {"message":"hello world"}
-        return result,200
-
-api.add_resource(GeneralInformation,"/")
+blueprints = [general,yearly,monthly,daily]
+# register blueprint
+for blueprint in blueprints:
+    app.register_blueprint(blueprint)
 
 if __name__ == '__main__':
     app.run(debug=True,port=5000)
