@@ -18,11 +18,7 @@ def get_general_info():
     try:
         res = requests.get(url,timeout=10)
     except:
-        response = {
-            "ok" : False,
-            "message" : "Error Fetching API from Goverment API"
-        }
-        return response,HTTP_500_INTERNAL_SERVER_ERROR
+        return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
     data = res.json()
     # Catch Error if wrong dict structure
     try:
@@ -52,8 +48,4 @@ def get_general_info():
         }
         return response, HTTP_200_OK        
     except Exception as e:
-        response = {
-            "ok" : False,
-            "message" : "Error on getting information"
-        }
-        return response,HTTP_404_NOT_FOUND
+        return {"ok": False, "message": "System internal problem"}, HTTP_500_INTERNAL_SERVER_ERROR

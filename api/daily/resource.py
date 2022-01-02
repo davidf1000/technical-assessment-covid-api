@@ -30,11 +30,8 @@ def get_daily_data():
     try:
         res = requests.get(url,timeout=10)
     except:
-        response = {
-            "ok" : False,
-            "message" : "Error Fetching API from Goverment API"
-        }
-        return response,HTTP_500_INTERNAL_SERVER_ERROR
+        return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
+
     list_daily = res.json()['update']['harian']
     # Find earliest daily data and current date
     earliest = parse(min(list_daily, key=lambda x: parse(
@@ -98,11 +95,8 @@ def get_daily_data_of_provided_year(year):
     try:
         res = requests.get(url,timeout=10)
     except:
-        response = {
-            "ok" : False,
-            "message" : "Error Fetching API from Goverment API"
-        }
-        return response,HTTP_500_INTERNAL_SERVER_ERROR
+        return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
+
     list_daily = res.json()['update']['harian']
     # Filter by year first before further processing
     list_daily = [x for x in list_daily if parse(x['key_as_string']).year == int(year)]        
@@ -166,11 +160,8 @@ def get_daily_data_of_provided_year_month(year,month):
     try:
         res = requests.get(url,timeout=10)
     except:
-        response = {
-            "ok" : False,
-            "message" : "Error Fetching API from Goverment API"
-        }
-        return response,HTTP_500_INTERNAL_SERVER_ERROR
+        return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
+
     list_daily = res.json()['update']['harian']
     # Filter by year and month first before further processing
     list_daily = [x for x in list_daily if f"{parse(x['key_as_string']).year}-{parse(x['key_as_string']).month}" == f"{year}-{int(month)}"]
@@ -228,11 +219,8 @@ def get_daily_data_of_provided_year_month_date(year, month, day):
     try:
         res = requests.get(url,timeout=10)
     except:
-        response = {
-            "ok" : False,
-            "message" : "Error Fetching API from Goverment API"
-        }
-        return response,HTTP_500_INTERNAL_SERVER_ERROR
+        return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
+
     list_daily = res.json()['update']['harian']
     # Filter by year, month, and date first before further processing
     list_daily = [x for x in list_daily if f"{parse(x['key_as_string']).year}-{parse(x['key_as_string']).month}-{parse(x['key_as_string']).day}" == f"{year}-{int(month)}-{int(day)}"]
