@@ -15,6 +15,7 @@ def get_general_info():
     url = "https://data.covid19.go.id/public/api/update.json"
     res = requests.get(url)
     data = res.json()
+    
     total_positive = data['update']['total']['jumlah_positif']
     total_recovered = data['update']['total']['jumlah_sembuh']
     total_deaths = data['update']['total']['jumlah_meninggal']
