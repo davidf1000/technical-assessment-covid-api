@@ -49,7 +49,7 @@ def get_monthly_data():
     set_date = set(list_daily_date)
     # Create empty list 
     data = []
-    # for each month, filter data in that month, then append 
+    # for each date, filter data in that date, then append 
     for date in set_date:
         positive = sum([x["jumlah_positif"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
         recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
@@ -117,7 +117,7 @@ def get_monthly_data_of_provided_year(year):
     set_date = set(list_daily_date)
     # Create empty list 
     data = []
-    # for each month, filter data in that month, then append 
+    # for each date, filter data in that date, then append 
     for date in set_date:
         positive = sum([x["jumlah_positif"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
         recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
@@ -148,9 +148,27 @@ Response Body (JSON), example: /monthly/2020/03
 """
 @monthly.get('/<year>/<month>')
 def get_monthly_data_of_provided_month_year(year,month):
+    # GET json data
+    url = "https://data.covid19.go.id/public/api/update.json"
+    res = requests.get(url)
+    list_daily = res.json()['update']['harian']
+    # Filter by year and month first before further processing
+    list_daily = [x for x in list_daily if f"{parse(x['key_as_string']).year}-{parse(x['key_as_string']).month}" == f"{year}-{int(month)}"]
+    # Calculate positive, recovered, and deaths in that year, active = positive - recovered - deaths
+    positive = sum([x["jumlah_positif"]['value'] for x in list_daily])
+    recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily])
+    deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily])
+    active = positive - recovered - deaths
+    data = {
+        "month":f"{year}-{str(month).zfill(2)}",
+        "positive": positive ,
+        "recovered": recovered,
+        "deaths":deaths,
+        "active":active
+    }
     response = {
-        "message":"monthly covid cases information in the provided month and year",
-        "year":year,
-        "month":month
+        "ok" : True,
+        "data" : data,
+        "message": "Request Successfull"     
         }
     return response,200
