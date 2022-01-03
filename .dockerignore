@@ -1,0 +1,5 @@
+flaskenv/
+*__pycache__*
+.coverage
+.VSCode*
+*.pyc

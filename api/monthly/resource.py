@@ -110,7 +110,7 @@ month of the year. example: ?upto=2020.12
 Description: Provide monthly data of total covid cases in the year provided in <year>.
 Response Body (JSON), example: /monthly/2020
 """
-@monthly.get('/monthly/<year>/')
+@monthly.get('/monthly/<year>')
 def get_monthly_data_of_provided_year(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
