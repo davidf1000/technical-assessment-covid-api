@@ -393,7 +393,6 @@ class DailyProvidedYearMonthDateTest(unittest.TestCase):
         response = tester.get("/daily/2021/01/05/")    
         key_needed= ['active',"deaths","positive","recovered","date"]
         data = response.data.decode("UTF-8")
-        print("data: ",data)
         data_dict = json.loads(data)
         for key in key_needed:
             self.assertTrue(key in data)

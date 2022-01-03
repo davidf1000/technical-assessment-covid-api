@@ -4,7 +4,6 @@ import unittest
 import ast
 import json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from api.checker.utils import keys_exists
 from app import app 
 """
 URL: http://<host>:<port>/
