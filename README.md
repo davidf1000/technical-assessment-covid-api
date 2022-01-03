@@ -56,23 +56,23 @@ Documentation of API using Postman :
 ![1](https://user-images.githubusercontent.com/47879766/147946715-f8430315-53eb-42a3-94a1-487afd811ea6.png)
 2. "http://\<host\>:\<port\>/"  
 ![2](https://user-images.githubusercontent.com/47879766/147946723-e6319177-75a4-4b39-b30f-8b862d8914db.png)
-3. http://<host>:<port>/yearly
+3. http://\<host\>:\<port\>/yearly
 ![3](https://user-images.githubusercontent.com/47879766/147946724-14bf78b9-97b0-4d61-b6b2-bd575aea6b48.png)
-4. http://<host>:<port>/yearly/<year>
+4. http://\<host\>:\<port\>/yearly/\<year\>
 ![4](https://user-images.githubusercontent.com/47879766/147946726-5d0fad28-60af-4ca5-a1de-05505c2c2e46.png)
-5. http://<host>:<port>/monthly
+5. http://\<host\>:\<port\>/monthly
 ![5](https://user-images.githubusercontent.com/47879766/147946729-2ed9de3f-5758-44bc-a3a6-9b783effb4a2.png)
-6. http://<host>:<port>/monthly/<year>
+6. http://\<host\>:\<port\>/monthly/\<year\>
 ![6](https://user-images.githubusercontent.com/47879766/147946731-21255bd9-2123-43b3-a79d-758b74dcd5a7.png)
-7. http://<host>:<port>/monthly/<year>/<month>
+7. http://\<host\>:\<port\>/monthly/\<year\>/\<month\>
 ![7](https://user-images.githubusercontent.com/47879766/147946735-f31add29-a24c-472b-a0e9-84eca79ce55f.png)
-8. http://<host>:<port>/daily
+8. http://\<host\>:\<port\>/daily
 ![8](https://user-images.githubusercontent.com/47879766/147946737-12e35e71-14dc-4419-b53f-5e3677c63c82.png)
-9. http://<host>:<port>/daily/<year>
+9. http://\<host\>:\<port\>/daily/\<year\>
 ![9](https://user-images.githubusercontent.com/47879766/147946739-090e2886-2915-47e9-8df4-9deb0c528cca.png)
-10. http://<host>:<port>/daily/<year>/<month>
+10. http://\<host\>:\<port\>/daily/\<year\>/\<month\>
 ![10](https://user-images.githubusercontent.com/47879766/147946741-7b0e0ffa-ea46-4dc5-959f-7e70143eff0c.png)
-11. http://<host>:<port>/daily/<year>/<month>/<date>
+11. http://\<host\>:\<port\>/daily/\<year\>/\<month\>/\<date\>
 ![11](https://user-images.githubusercontent.com/47879766/147946742-8498c6ac-c39b-49d7-9197-253a63a9ad6b.png)
 ## Unit Tests
 Unit Test using unitest module. List of unit testing criteria implemented: 
@@ -88,16 +88,16 @@ Unit tests individual API with:
 ```shell
 python3 tests/test_all.py <apiClassName> 
 ```
-1. GeneralTest : http://<host>:<port>/
-2. YearlyTest : http://<host>:<port>/yearly
-3. YearlyProvidedYearTest : http://<host>:<port>/yearly/<year>
-4. MonthlyTest : http://<host>:<port>/monthly
-5. MonthlyProvidedYearTest : http://<host>:<port>/monthly/<year>
-6. MonthlyProvidedYearMonthTest : http://<host>:<port>/monthly/<year>/<month>
-7. DailyTest http://<host>:<port>/daily
-8. DailyProvidedYearTest : http://<host>:<port>/daily/<year>
-9. DailyProvidedYearMonthTest : http://<host>:<port>/daily/<year>/<month>
-10. DailyProvidedYearMonthDateTest : http://<host>:<port>/daily/<year>/<month>/<date>
+1. GeneralTest : http://\<host\>:\<port\>/
+2. YearlyTest : http://\<host\>:\<port\>/yearly
+3. YearlyProvidedYearTest : http://\<host\>:\<port\>/yearly/\<year\>
+4. MonthlyTest : http://\<host\>:\<port\>/monthly
+5. MonthlyProvidedYearTest : http://\<host\>:\<port\>/monthly/\<year\>
+6. MonthlyProvidedYearMonthTest : http://\<host\>:\<port\>/monthly/\<year\>/\<month\>
+7. DailyTest http://\<host\>:\<port\>/daily
+8. DailyProvidedYearTest : http://\<host\>:\<port\>/daily/\<year\>
+9. DailyProvidedYearMonthTest : http://\<host\>:\<port\>/daily/\<year\>/\<month\>
+10. DailyProvidedYearMonthDateTest : http://\<host\>:\<port\>/daily/\<year\>/\<month\>/\<date\>
 
 Or to run every testcase from every API : 
 ```shell
