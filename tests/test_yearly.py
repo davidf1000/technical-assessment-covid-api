@@ -21,17 +21,16 @@ class YearlyTest(unittest.TestCase):
         response = tester.get("/yearly/?since=2020&upto=2022")
         status_code = response.status_code
         self.assertEqual(status_code,200)
-        
     # Check method not allowed : POST, PUT, PATCH, DELETE
     def test_method(self):
         tester=  app.test_client(self)
-        response = tester.post("/")
+        response = tester.post("/yearly/")
         self.assertEqual(response.status_code,405)
-        response = tester.put("/")
+        response = tester.put("/yearly/")
         self.assertEqual(response.status_code,405)
-        response = tester.patch("/")
+        response = tester.patch("/yearly/")
         self.assertEqual(response.status_code,405)
-        response = tester.delete("/")
+        response = tester.delete("/yearly/")
         self.assertEqual(response.status_code,405)    
     # Check if content return is application/json
     def test_content_return(self):
@@ -80,7 +79,7 @@ class YearlyTest(unittest.TestCase):
         self.assertEqual(response.status_code,400)        
             
     # Check response JSON OK
-    def test_response(self):
+    def test_response_body(self):
         tester = app.test_client(self)
         response = tester.get("/yearly/?since=2020&upto=2022")    
         key_needed= ['active',"deaths","positive","recovered","year"]
@@ -117,23 +116,22 @@ class YearlyProvidedYearTest(unittest.TestCase):
     # Check method not allowed : POST, PUT, PATCH, DELETE
     def test_method(self):
         tester=  app.test_client(self)
-        response = tester.post("/")
+        response = tester.post("/yearly/2021/")
         self.assertEqual(response.status_code,405)
-        response = tester.put("/")
+        response = tester.put("/yearly/2021/")
         self.assertEqual(response.status_code,405)
-        response = tester.patch("/")
+        response = tester.patch("/yearly/2021/")
         self.assertEqual(response.status_code,405)
-        response = tester.delete("/")
+        response = tester.delete("/yearly/2021/")
         self.assertEqual(response.status_code,405)     
     # Check if content return is application/json
     def test_content_return(self):
         tester=  app.test_client(self)
-        response = tester.get("/")
+        response = tester.get("/yearly/2021/")
         self.assertEqual(response.content_type,"application/json")           
     # Check path parameter
     def test_path_parameter(self):
         tester=  app.test_client(self)
-        response = tester.post("/")        
         # Send non-valid year for testing
         # Test 1 : include non numeric character
         response = tester.get("/yearly/20zs")    
@@ -148,7 +146,7 @@ class YearlyProvidedYearTest(unittest.TestCase):
         response = tester.get("/yearly/2025")    
         self.assertEqual(response.status_code,400)           
     # Check response JSON OK
-    def test_response(self):
+    def test_response_body(self):
         tester = app.test_client(self)
         response = tester.get("/yearly/2021")    
         key_needed= ['active',"deaths","positive","recovered","year"]

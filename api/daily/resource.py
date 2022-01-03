@@ -103,7 +103,7 @@ Response Body (JSON), example: /daily/2020
 """
 
 
-@daily.get('/<year>')
+@daily.get('/<year>/')
 def get_daily_data_of_provided_year(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -187,7 +187,7 @@ Response Body (JSON), example: /daily/2020/05
 """
 
 
-@daily.get('/<year>/<month>')
+@daily.get('/<year>/<month>/')
 def get_daily_data_of_provided_year_month(year,month):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -267,7 +267,7 @@ Response Body (JSON), example: /daily/2020/05/01
 """
 
 
-@daily.get('/<year>/<month>/<day>')
+@daily.get('/<year>/<month>/<day>/')
 def get_daily_data_of_provided_year_month_date(year, month, day):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -285,7 +285,6 @@ def get_daily_data_of_provided_year_month_date(year, month, day):
     # if not a single record found, handle error
     if (len(list_daily)==0):
         return {"ok": False, "message": "Data not found"}, HTTP_404_NOT_FOUND           
-    
     item = list_daily[0] 
     # Create empty list
     try:
