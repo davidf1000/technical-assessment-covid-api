@@ -4,10 +4,17 @@
 [![Code Climate](https://codeclimate.com/github/brennv/flask-app/badges/gpa.svg)](https://codeclimate.com/github/brennv/flask-app)
 [![Docker](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg?maxAge=2592000)]()
 
-# flask-app
-A docker containerized HTTP API server that could retrieve GET information about current status of covid cases and vaccination rates in Indonesia. Server is able to list the data by yearly, monthly, daily, and be able to provide information on general situations. Data is fetched from official Indonesian Goverment APIs. Server is written in Python using Flask Framework. 
+# Introduction
+Nodeflux Software Engineer Internship Batch 2 Technical Assessment 
+<br />
+A docker containerized HTTP API server that could retrieve GET information about current status of covid cases and vaccination rates in Indonesia. Server is able to list the data by yearly, monthly, daily, and be able to provide information on general situations. Data is fetched from official Indonesian Goverment APIs. 
+<br />
+HTTP API server is written in Python using Flask Framework. Flask Blueprint is used for code modularization. Error handling is defined for various scenario and will reports errors by returning appropriate HTTP status code. Postman is used during the development process and Python unittest module is used to do unit testing for each created API. Python coverage module is used to measure test coverage. Server is containerized using Docker. The Docker Image is pushed to Docker Hub.
 
 ## Getting started
+
+
+
 
 Install [docker](https://docs.docker.com/engine/installation/) and run:
 
@@ -25,19 +32,9 @@ python app.py
 
 Visit [http://localhost:5000](http://localhost:5000)
 
-## Development
+## Implementation
 
-Create a new branch off the **develop** branch for features or fixes.
-
-After making changes rebuild images and run the app:
-
-```shell
-docker-compose build
-docker-compose run -p 5000:5000 web python app.py
-# docker stop flaskapp_redis_1
-```
-
-## Tests
+## Unit Tests
 
 Standalone unit tests run with:
 
@@ -55,3 +52,5 @@ docker-compose -f test.yml -p ci run test python -m pytest --cov=web/ tests
 ```
 
 After testing, submit a pull request to merge changes with **develop**.
+
+## Additional Information
