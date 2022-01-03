@@ -6,7 +6,7 @@ from api.checker.utils import check_param_date_range, check_param_year, check_st
 
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 
-yearly = Blueprint("yearly", __name__, url_prefix="/yearly")
+yearly = Blueprint("yearly", __name__)
 
 """
 URL: http://<host>:<port>/yearly
@@ -23,7 +23,7 @@ Response Body (JSON)
 """
 
 
-@yearly.get('/')
+@yearly.get('/yearly')
 def get_yearly_data():
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -70,7 +70,9 @@ def get_yearly_data():
                             for x in list_daily if parse(x['key_as_string']).year == year])
             deaths = sum([x["jumlah_meninggal"]['value']
                         for x in list_daily if parse(x['key_as_string']).year == year])
-            active = positive - recovered - deaths
+            # Active = pasien yang dirawat
+            active = sum([x["jumlah_dirawat"]['value']
+                        for x in list_daily if parse(x['key_as_string']).year == year])
             data.append({
                 "year": year,
                 "positive": positive,
@@ -99,7 +101,7 @@ Description: Provide yearly data of total covid cases of the year provided in <y
 Response Body (JSON), example: /yearly/2020
 """
 
-@yearly.get('/<year>/')
+@yearly.get('/yearly/<year>')
 def get_yearly_data_provided(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -123,8 +125,8 @@ def get_yearly_data_provided(year):
         positive = sum([x["jumlah_positif"]['value'] for x in list_daily])
         recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily])
         deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily])
-        active = positive - recovered - deaths
-        data = {
+        active = sum([x["jumlah_dirawat"]['value'] for x in list_daily])
+        data = { 
             "year": year,
             "positive": positive,
             "recovered": recovered,

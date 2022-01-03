@@ -7,7 +7,7 @@ from api.checker.utils import check_param_date_range, check_param_month, check_p
 
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_404_NOT_FOUND,HTTP_500_INTERNAL_SERVER_ERROR,HTTP_400_BAD_REQUEST
 
-monthly = Blueprint("monthly", __name__, url_prefix="/monthly")
+monthly = Blueprint("monthly", __name__)
 
 """
 URL: http://<host>:<port>/monthly
@@ -22,7 +22,7 @@ current month. example: ?upto=2022.01
 Description: Provide monthly data of total covid cases.
 Response Body (JSON)
 """
-@monthly.get('/')
+@monthly.get('/monthly')
 def get_monthly_data():
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -74,7 +74,7 @@ def get_monthly_data():
             positive = sum([x["jumlah_positif"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
             recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
             deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
-            active = positive - recovered - deaths
+            active = sum([x["jumlah_dirawat"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
             data.append({
                 "month":date,
                 "positive": positive ,
@@ -110,7 +110,7 @@ month of the year. example: ?upto=2020.12
 Description: Provide monthly data of total covid cases in the year provided in <year>.
 Response Body (JSON), example: /monthly/2020
 """
-@monthly.get('/<year>/')
+@monthly.get('/monthly/<year>/')
 def get_monthly_data_of_provided_year(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -165,7 +165,7 @@ def get_monthly_data_of_provided_year(year):
             positive = sum([x["jumlah_positif"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
             recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
             deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
-            active = positive - recovered - deaths
+            active = sum([x["jumlah_dirawat"]['value'] for x in list_daily if f"{parse(x['key_as_string']).year}-{str(parse(x['key_as_string']).month).zfill(2)}" == date])
             data.append({
                 "month":date,
                 "positive": positive ,
@@ -194,7 +194,7 @@ Description: Provide monthly data of total covid cases in the month and year pro
 <month>.
 Response Body (JSON), example: /monthly/2020/03
 """
-@monthly.get('/<year>/<month>')
+@monthly.get('/monthly/<year>/<month>')
 def get_monthly_data_of_provided_month_year(year,month):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -220,7 +220,7 @@ def get_monthly_data_of_provided_month_year(year,month):
         positive = sum([x["jumlah_positif"]['value'] for x in list_daily])
         recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily])
         deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily])
-        active = positive - recovered - deaths
+        active = sum([x["jumlah_dirawat"]['value'] for x in list_daily])
         data = {
             "month":f"{year}-{str(month).zfill(2)}",
             "positive": positive ,

@@ -2,7 +2,7 @@ from flask import Blueprint, request
 import requests
 
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
-general = Blueprint("general", __name__, url_prefix="/")
+general = Blueprint("general", __name__)
 
 """
 URL: http://<host>:<port>/
@@ -11,8 +11,7 @@ Description: Entry point for all API, provide general information of covid cases
 Response Body (JSON)
 """
 
-
-@general.get('')
+@general.get('/')
 def get_general_info():
     url = "https://data.covid19.go.id/public/api/update.json"
     try:

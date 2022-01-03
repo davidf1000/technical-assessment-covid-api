@@ -7,7 +7,7 @@ from api.checker.utils import check_param_date_range, check_param_day, check_par
 
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND,HTTP_500_INTERNAL_SERVER_ERROR
 
-daily = Blueprint("daily", __name__, url_prefix="/daily")
+daily = Blueprint("daily", __name__)
 
 """
 URL: http://<host>:<port>/daily
@@ -24,7 +24,7 @@ Response Body (JSON)
 """
 
 
-@daily.get('/')
+@daily.get('/daily')
 def get_daily_data():
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -65,7 +65,7 @@ def get_daily_data():
             positive = item["jumlah_positif"]['value']
             recovered = item["jumlah_sembuh"]['value']
             deaths = item["jumlah_meninggal"]['value']
-            active = positive - recovered - deaths
+            active = item["jumlah_dirawat"]['value']
             data.append({
                 "date": f'{date.year}-{str(date.month).zfill(2)}-{str(date.day).zfill(2)}',
                 "positive": positive,
@@ -103,7 +103,7 @@ Response Body (JSON), example: /daily/2020
 """
 
 
-@daily.get('/<year>/')
+@daily.get('/daily/<year>')
 def get_daily_data_of_provided_year(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -149,7 +149,7 @@ def get_daily_data_of_provided_year(year):
             positive = item["jumlah_positif"]['value']
             recovered = item["jumlah_sembuh"]['value']
             deaths = item["jumlah_meninggal"]['value']
-            active = positive - recovered - deaths
+            active = item["jumlah_dirawat"]['value']
             data.append({
                 "date": f'{date.year}-{str(date.month).zfill(2)}-{str(date.day).zfill(2)}',
                 "positive": positive,
@@ -187,7 +187,7 @@ Response Body (JSON), example: /daily/2020/05
 """
 
 
-@daily.get('/<year>/<month>/')
+@daily.get('/daily/<year>/<month>')
 def get_daily_data_of_provided_year_month(year,month):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -236,7 +236,7 @@ def get_daily_data_of_provided_year_month(year,month):
             positive = item["jumlah_positif"]['value']
             recovered = item["jumlah_sembuh"]['value']
             deaths = item["jumlah_meninggal"]['value']
-            active = positive - recovered - deaths
+            active = item["jumlah_dirawat"]['value']
             data.append({
                 "date": f'{date.year}-{str(date.month).zfill(2)}-{str(date.day).zfill(2)}',
                 "positive": positive,
@@ -267,7 +267,7 @@ Response Body (JSON), example: /daily/2020/05/01
 """
 
 
-@daily.get('/<year>/<month>/<day>/')
+@daily.get('/daily/<year>/<month>/<day>')
 def get_daily_data_of_provided_year_month_date(year, month, day):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -293,7 +293,7 @@ def get_daily_data_of_provided_year_month_date(year, month, day):
         positive = item["jumlah_positif"]['value']
         recovered = item["jumlah_sembuh"]['value']
         deaths = item["jumlah_meninggal"]['value']
-        active = positive - recovered - deaths
+        active = item["jumlah_dirawat"]['value']
         data = {
             "date": f'{date.year}-{str(date.month).zfill(2)}-{str(date.day).zfill(2)}',
             "positive": positive,
