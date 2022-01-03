@@ -10,13 +10,12 @@ app = Flask(__name__)
 # api = Api(app)
 
 blueprints = [general, yearly, monthly, daily]
+
 # register blueprint
 for blueprint in blueprints:
     app.register_blueprint(blueprint)
 
 # Error Handler
-
-
 @app.errorhandler(HTTP_404_NOT_FOUND)
 def handle_404(e):
     return {

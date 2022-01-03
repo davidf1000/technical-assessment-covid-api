@@ -1,4 +1,5 @@
 FROM ubuntu:latest
+
 WORKDIR /app
 ADD . /app
 RUN set -xe \
