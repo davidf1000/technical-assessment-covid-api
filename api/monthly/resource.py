@@ -56,7 +56,7 @@ def get_monthly_data():
     if request.args.get('upto') is not None : 
         upto = parse(request.args.get('upto').replace('.','-'))
         # replace hari dengan hari terakhir dari bulan tersebut
-        upto.replace(day=calendar.monthrange(since.year,since.month)[1])
+        upto.replace(day=calendar.monthrange(upto.year,upto.month)[1])
     else:
         upto = current
     
@@ -110,7 +110,7 @@ month of the year. example: ?upto=2020.12
 Description: Provide monthly data of total covid cases in the year provided in <year>.
 Response Body (JSON), example: /monthly/2020
 """
-@monthly.get('/<year>')
+@monthly.get('/<year>/')
 def get_monthly_data_of_provided_year(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
@@ -147,7 +147,7 @@ def get_monthly_data_of_provided_year(year):
     if request.args.get('upto') is not None : 
         upto = parse(request.args.get('upto').replace('.','-'))
         # replace hari dengan hari terakhir dari bulan tersebut
-        upto.replace(day=calendar.monthrange(since.year,since.month)[1])
+        upto.replace(day=calendar.monthrange(upto.year,upto.month)[1])
     else:
         upto = current
     # Make sure to check year == year in string query 
@@ -203,7 +203,7 @@ def get_monthly_data_of_provided_month_year(year,month):
     except:
         return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
     # Check Param Path Validity
-    if not check_param_year(year) and not check_param_month(month):
+    if not check_param_year(year) or not check_param_month(month):
         return {"ok": False, "message": "Path parameter not valid"}, HTTP_400_BAD_REQUEST
     list_daily = res.json()['update']['harian']
     list_daily = res.json()['update']['harian']

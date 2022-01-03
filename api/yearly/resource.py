@@ -99,7 +99,7 @@ Description: Provide yearly data of total covid cases of the year provided in <y
 Response Body (JSON), example: /yearly/2020
 """
 
-@yearly.get('/<year>')
+@yearly.get('/<year>/')
 def get_yearly_data_provided(year):
     # GET json data
     url = "https://data.covid19.go.id/public/api/update.json"
