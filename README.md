@@ -15,8 +15,6 @@ HTTP API server is written in Python using Flask Framework. Flask Blueprint is u
 
 ## Getting started
 
-# Docker
-
 Install [docker](https://docs.docker.com/engine/installation/) and pull application's docker image from :
 <br/>
 Docker Image repository link : 
@@ -101,15 +99,26 @@ Or to run every testcase from every API :
 python3 tests/test_all.py
 ```
 
-# Unit Test Result 
+### Unit Test Result 
 
-# Unit Test Coverage
+### Unit Test Coverage
+To Check the coverage of unit test run: 
+```shell
+cd tests
+coverage run -m unittest test_all.py
+```
+To show report of the results : 
+```shell
+coverage report
+```
 
+Based on test coverage report, unit test has a test coverage of 95% 
 ## Additional Information
-# Conclusion
-
-# Current Limitations
-
-# Potential Issues
-
-# Future Ideation
+Based on Implementation of Covid Cases HTTP API, server is able to meet all the requirements needed and provide error handling for various scenarios. Unit testing of the API shows average test coverage of 95%. 
+### Current Limitations
+System still doesnt fully handle internal system error, especially when caused by improper JSON response structure and querying data  
+### Future Ideation
+- Use the API to create Covid Cases Plotter Website (Reference : https://github.com/davidf1000/Corona-Tracker-React , https://warm-mesa-01623.herokuapp.com/ ) 
+- Further containerizing Flask Web Apps together with uWSGI and NGINX using docker compose so that it can be deployed securely with high performance and efficiency 
+- Create new string query to sort lists of data with ASC or DESC order
+- Create new string query to limit the elements of data lists for the first X latest data
