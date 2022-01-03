@@ -26,7 +26,7 @@ docker pull davidf1000/api-nodeflux-assessment
 
 Run the image using : 
 ```shell
-docker run -it -d --rm -p 5000:5000 davidf1000/api-nodeflux-assessment
+docker run -it -d --network=host --rm -p 5000:5000 davidf1000/api-nodeflux-assessment
 ```
 
 Otherwise, for the standalone web service:
