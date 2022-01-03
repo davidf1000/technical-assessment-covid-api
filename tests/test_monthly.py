@@ -18,6 +18,21 @@ class MonthlyTest(unittest.TestCase):
         status_code = response.status_code
         self.assertEqual(status_code,200)
     # Check method not allowed
+    def test_method(self):
+        tester=  app.test_client(self)
+        response = tester.post("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.put("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.patch("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.delete("/")
+        self.assertEqual(response.status_code,405)        
+    # Check if content return is application/json
+    def test_content_return(self):
+        tester=  app.test_client(self)
+        response = tester.get("/")
+        self.assertEqual(response.content_type,"application/json")    
     # Check Query String since
     # Check Query String upto
     # Check Query String since and upto     
@@ -36,7 +51,17 @@ class MonthlyProvidedYearTest(unittest.TestCase):
         response = tester.get("/monthly/2021?since=2021.01&upto=2021.04")
         status_code = response.status_code
         self.assertEqual(status_code,200)
-    # Check method not allowed
+    # Check method not allowed : POST, PUT, PATCH, DELETE
+    def test_method(self):
+        tester=  app.test_client(self)
+        response = tester.post("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.put("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.patch("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.delete("/")
+        self.assertEqual(response.status_code,405)        
     # Check Query String since
     # Check Query String upto
     # Check Query String since and upto  
@@ -57,7 +82,22 @@ class MonthlyProvidedYearMonthTest(unittest.TestCase):
         response = tester.get("/monthly/2021/03")
         status_code = response.status_code
         self.assertEqual(status_code,200)
-    # Check method not allowed
+    # Check method not allowed : POST, PUT, PATCH, DELETE
+    def test_method(self):
+        tester=  app.test_client(self)
+        response = tester.post("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.put("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.patch("/")
+        self.assertEqual(response.status_code,405)
+        response = tester.delete("/")
+        self.assertEqual(response.status_code,405)  
+    # Check if content return is application/json
+    def test_content_return(self):
+        tester=  app.test_client(self)
+        response = tester.get("/")
+        self.assertEqual(response.content_type,"application/json")                
     # Check path parameter   
     # Check response JSON OK
     # Check response 404            

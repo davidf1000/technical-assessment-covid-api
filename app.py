@@ -22,7 +22,7 @@ def handle_404(e):
     return {
         "ok": False,
         "message": "Error not found"
-    }
+    },HTTP_404_NOT_FOUND
 
 
 @app.errorhandler(HTTP_500_INTERNAL_SERVER_ERROR)
@@ -30,14 +30,14 @@ def handle_500(e):
     return {
         "ok": False,
         "message": "Internal server problem"
-    }
+    },HTTP_500_INTERNAL_SERVER_ERROR
     
 @app.errorhandler(HTTP_405_METHOD_NOT_ALLOWED)
 def handle_405(e):
     return {
         "ok": False,
         "message": "Method Not Allowed"
-    }
+    },HTTP_405_METHOD_NOT_ALLOWED
 
 
 if __name__ == '__main__':
