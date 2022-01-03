@@ -3,7 +3,6 @@ import requests
 from dateutil.parser import parse
 import datetime
 from api.checker.utils import check_param_date_range, check_param_year, check_string_year
-
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 
 yearly = Blueprint("yearly", __name__)
@@ -21,8 +20,6 @@ example: ?upto=2022
 Description: Provide yearly data of total covid cases.
 Response Body (JSON)
 """
-
-
 @yearly.get('/yearly')
 def get_yearly_data():
     # GET json data
@@ -31,7 +28,7 @@ def get_yearly_data():
         res = requests.get(url, timeout=10)
         list_daily = res.json()['update']['harian']
     except:
-        return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
+        return {"ok": False, "message": "Error Fetching API from Goverment API"}, HTTP_500_INTERNAL_SERVER_ERROR
     # Check querystring validity
     if 'since' in request.args:
         if not check_string_year(request.args['since']):
@@ -65,14 +62,14 @@ def get_yearly_data():
     try:
         for year in set_year:
             positive = sum([x["jumlah_positif"]['value']
-                        for x in list_daily if parse(x['key_as_string']).year == year])
+                            for x in list_daily if parse(x['key_as_string']).year == year])
             recovered = sum([x["jumlah_sembuh"]['value']
                             for x in list_daily if parse(x['key_as_string']).year == year])
             deaths = sum([x["jumlah_meninggal"]['value']
-                        for x in list_daily if parse(x['key_as_string']).year == year])
+                          for x in list_daily if parse(x['key_as_string']).year == year])
             # Active = pasien yang dirawat
             active = sum([x["jumlah_dirawat"]['value']
-                        for x in list_daily if parse(x['key_as_string']).year == year])
+                          for x in list_daily if parse(x['key_as_string']).year == year])
             data.append({
                 "year": year,
                 "positive": positive,
@@ -80,7 +77,7 @@ def get_yearly_data():
                 "deaths": deaths,
                 "active": active
             })
-    except Exception as e: 
+    except Exception as e:
         return {"ok": False, "message": "System internal problem"}, HTTP_500_INTERNAL_SERVER_ERROR
     # Check if empty
     if(len(data) == 0):
@@ -100,7 +97,6 @@ Method: GET
 Description: Provide yearly data of total covid cases of the year provided in <year>.
 Response Body (JSON), example: /yearly/2020
 """
-
 @yearly.get('/yearly/<year>')
 def get_yearly_data_provided(year):
     # GET json data
@@ -108,8 +104,8 @@ def get_yearly_data_provided(year):
     try:
         res = requests.get(url, timeout=10)
     except:
-        return {"ok" : False,"message" : "Error Fetching API from Goverment API"},HTTP_500_INTERNAL_SERVER_ERROR
-    # Check path param validity 
+        return {"ok": False, "message": "Error Fetching API from Goverment API"}, HTTP_500_INTERNAL_SERVER_ERROR
+    # Check path param validity
     if not check_param_year(year):
         return {"ok": False, "message": "Path parameter not valid"}, HTTP_400_BAD_REQUEST
     list_daily = res.json()['update']['harian']
@@ -117,16 +113,16 @@ def get_yearly_data_provided(year):
     list_daily = [x for x in list_daily if parse(
         x['key_as_string']).year == int(year)]
     # if not a single record found, handle error
-    if (len(list_daily)==0):
+    if (len(list_daily) == 0):
         return {"ok": False, "message": "Data not found"}, HTTP_404_NOT_FOUND
     # Calculate positive, recovered, and deaths in that year, active = positive - recovered - deaths
-    # Error handling for dict struct validity 
+    # Error handling for dict struct validity
     try:
         positive = sum([x["jumlah_positif"]['value'] for x in list_daily])
         recovered = sum([x["jumlah_sembuh"]['value'] for x in list_daily])
         deaths = sum([x["jumlah_meninggal"]['value'] for x in list_daily])
         active = sum([x["jumlah_dirawat"]['value'] for x in list_daily])
-        data = { 
+        data = {
             "year": year,
             "positive": positive,
             "recovered": recovered,

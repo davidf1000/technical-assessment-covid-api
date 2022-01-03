@@ -3,10 +3,8 @@ from dateutil.parser import parse
 import requests
 import datetime
 import calendar
-from api.checker.utils import check_param_date_range, check_param_month, check_param_year, check_string_year,check_string_year_month
-
+from api.checker.utils import check_param_date_range, check_param_month, check_param_year,check_string_year_month
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_404_NOT_FOUND,HTTP_500_INTERNAL_SERVER_ERROR,HTTP_400_BAD_REQUEST
-
 monthly = Blueprint("monthly", __name__)
 
 """

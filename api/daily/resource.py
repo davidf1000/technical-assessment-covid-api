@@ -2,9 +2,7 @@ from flask import Blueprint, request
 from dateutil.parser import parse
 import requests
 import datetime
-import calendar
 from api.checker.utils import check_param_date_range, check_param_day, check_param_month, check_param_year, check_string_year_month_day
-
 from api.constants.http_status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND,HTTP_500_INTERNAL_SERVER_ERROR
 
 daily = Blueprint("daily", __name__)
@@ -22,8 +20,6 @@ today. example: ?upto=2022.01.01
 Description: Provide daily data of covid cases.
 Response Body (JSON)
 """
-
-
 @daily.get('/daily')
 def get_daily_data():
     # GET json data
@@ -101,8 +97,6 @@ last day of the year. example: ?upto=2022.01.01
 Description: Provide daily data of covid cases in the year provided in <year>
 Response Body (JSON), example: /daily/2020
 """
-
-
 @daily.get('/daily/<year>')
 def get_daily_data_of_provided_year(year):
     # GET json data
@@ -185,8 +179,6 @@ last day of the month. example: ?upto=2020.05.31
 Description: Provide daily data of covid cases in the year and month provided in <year> and <month>.
 Response Body (JSON), example: /daily/2020/05
 """
-
-
 @daily.get('/daily/<year>/<month>')
 def get_daily_data_of_provided_year_month(year,month):
     # GET json data
@@ -265,8 +257,6 @@ Method: GET
 Description: Provide daily data of covid cases on the day provided in <year>, <month> and, <date>.
 Response Body (JSON), example: /daily/2020/05/01
 """
-
-
 @daily.get('/daily/<year>/<month>/<day>')
 def get_daily_data_of_provided_year_month_date(year, month, day):
     # GET json data

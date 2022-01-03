@@ -6,8 +6,17 @@ from api.yearly.resource import yearly
 from api.monthly.resource import monthly
 from api.daily.resource import daily
 
+""" 
+Created by David Fauzi 
+for Technical Assessment of Nodeflux Software Engineer Internship Batch 2
+
+HTTP API Server Covid Cases in Indonesia
+Written with Python using Flask Framework 
+Containerized using Docker 
+Unit Test using python unittest module 
+"""
+
 app = Flask(__name__)
-# api = Api(app)
 
 blueprints = [general, yearly, monthly, daily]
 
